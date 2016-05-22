@@ -1,1 +1,2 @@
-include ':app', ':obd-java-api-master'
+include ':app',':obd-java-api-master'
+//project(':obd-java-api-master').projectDir = new File('../TryCar')
