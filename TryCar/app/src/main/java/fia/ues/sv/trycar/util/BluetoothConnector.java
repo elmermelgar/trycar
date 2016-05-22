@@ -32,8 +32,7 @@ public class BluetoothConnector {
      * @param adapter the Android BT adapter
      * @param uuidCandidates a list of UUIDs. if null or empty, the Serial PP id is used
      */
-    public BluetoothConnector(BluetoothDevice device, boolean secure, BluetoothAdapter adapter,
-                              List<UUID> uuidCandidates) {
+    public BluetoothConnector(BluetoothDevice device, boolean secure, BluetoothAdapter adapter, List<UUID> uuidCandidates) {
         this.device = device;
         this.secure = secure;
         this.adapter = adapter;
