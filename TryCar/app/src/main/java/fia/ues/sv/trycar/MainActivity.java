@@ -9,7 +9,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
-import com.github.pires.obd.commands.ObdMultiCommand;
+import com.github.pires.obd.commands.SpeedCommand;
+import com.github.pires.obd.commands.protocol.*;
 import com.github.pires.obd.commands.engine.RPMCommand;
 import com.github.pires.obd.commands.fuel.AirFuelRatioCommand;
 import com.github.pires.obd.enums.ObdProtocols;
@@ -26,8 +27,9 @@ import fia.ues.sv.trycar.util.BluetoothConnector;
 import fia.ues.sv.trycar.util.BluetoothSocketWrapper;
 
 public class MainActivity extends Activity {
-
-
+    //Initial configuration ODB Adapter
+    EchoOffCommand echoOffCommand;
+    //Bluetooth configuration
     BluetoothConnector bluetoothConnector;
     BluetoothAdapter bluetoothAdapter;
     List<UUID> list;
@@ -37,6 +39,8 @@ public class MainActivity extends Activity {
     final ArrayList devices = new ArrayList();
     //test RPM
     RPMCommand rpmCommand;
+    SpeedCommand speedCommand;
+    AirFuelRatioCommand airFuelRatioCommand;
     @Override
     protected void onNewIntent(Intent intent) {
 
@@ -56,23 +60,47 @@ public class MainActivity extends Activity {
                 BluetoothDevice dev= (BluetoothDevice)device;
                 deviceStrs.add(dev.getName() + "\n" + dev.getAddress());
                 devices.add(dev.getAddress());
-                System.out.println(dev.getName() + "\n" + dev.getAddress());
-                Toast.makeText(this,dev.getName() + "\n" + dev.getAddress(),Toast.LENGTH_SHORT).show();
+                //System.out.println(dev.getName() + "\n" + dev.getAddress());
+                //Toast.makeText(this,dev.getName() + "\n" + dev.getAddress(),Toast.LENGTH_SHORT).show();
             }
         }
+        System.out.println("adaptador:"+BluetoothAdapter.getDefaultAdapter().getAddress());
+        list=new ArrayList();
+        BluetoothAdapter btAdapter1 = BluetoothAdapter.getDefaultAdapter();
 
-       /* bluetoothConnector=new BluetoothConnector(,true, BluetoothAdapter.getDefaultAdapter(), list);
+        BluetoothDevice device = btAdapter.getRemoteDevice("00:1D:A5:68:98:8D");
+
+        bluetoothConnector=new BluetoothConnector(device,true, btAdapter1, list);
         try {
             bluetoothSocketWrapper=bluetoothConnector.connect();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            new EchoOffCommand().run( bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
+            new LineFeedOffCommand().run(  bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
+            new TimeoutCommand(10).run( bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
+            new SelectProtocolCommand(ObdProtocols.AUTO).run(  bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //get RPM
         rpmCommand= new RPMCommand();
+        speedCommand=new SpeedCommand();
+       // airFuelRatioCommand=new AirFuelRatioCommand();
         while(!Thread.currentThread().isInterrupted()){
             try {
+                speedCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
                 rpmCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
-                Toast.makeText(MainActivity.this, "RPM:"+rpmCommand.getFormattedResult(), Toast.LENGTH_SHORT).show();
+                //airFuelRatioCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
+                System.out.println("RPM:" + rpmCommand.getFormattedResult());
+                System.out.println("Velocidad:"+speedCommand.getFormattedResult());
+                //System.out.println("Aire gas:"+airFuelRatioCommand.getFormattedResult());
+                //Toast.makeText(MainActivity.this, "RPM:"+rpmCommand.getFormattedResult(),Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -80,7 +108,6 @@ public class MainActivity extends Activity {
             }
         }
 
-*/
 
     }
 }
