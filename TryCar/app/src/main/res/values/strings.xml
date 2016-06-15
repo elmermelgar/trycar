@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">TryCar</string>
+    <string name="app_name">Trycar</string>
+    <string name="consultar">Consultar</string>
+    <string name="guardar">Guardar</string>
+    <string name="minimo">Minimo</string>
+    <string name="maximo">Maximo</string>
+    <string name="promedio">Promedio</string>
+    <string name="rpm">RPM</string>
+    <string name="temprefri">Temp Refri</string>
+    <string name="tempamb">Temp  Amb</string>
+    <string name="percentfuel">% fuel</string>
+    <string name="levelfuel">Level Fuel</string>
+    <string name="tempoil">TempOil</string>
+    <string name="engine">Engine</string>
+    <string name="speed">Speed</string>
+    <string name="reporte">Reporte</string>
+    <string name="envmail">Enviar mail</string>
+    <string name="ruta">Ruta</string>
+    <string name="nombre">Nombre</string>
+    <string name="email">Email</string>
+    <string name="codigo">Codigo</string>
+
 </resources>
