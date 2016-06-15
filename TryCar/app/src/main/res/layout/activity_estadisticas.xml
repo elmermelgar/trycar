@@ -3,54 +3,90 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingTop="30dip"
-    android:stretchColumns="1" >
-    <TableRow>
-        <TextView android:text="@string/codigo"/>
-        <EditText
-            android:id="@+id/editcodigo"
-            android:inputType="text"
-            android:maxLength="10" />
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip"
+    android:stretchColumns="1"
+    android:baselineAligned="false">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp">
+
+        <TextView android:text="@string/estadisticas"
+            android:layout_span="2"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow android:layout_marginBottom="30dp">
+        <TextView android:text="@string/indicador"
+            android:paddingRight="25dp"
+            android:layout_gravity="center_vertical|right" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/indicadorSpinner" />
+
+    </TableRow>
+    <TableRow android:layout_marginBottom="15dp">
+
+        <Button
+            android:onClick="consultarEstadistica"
+            android:text="@string/consultar"
+            android:layout_column="0"
+            android:layout_span="2"
+            android:textStyle="bold"
+            android:textSize="15sp" />
     </TableRow>
     <TableRow>
-     <Button
-         android:onClick=""
-         android:text="@string/consultar" />
-    </TableRow>
-    <TableRow>
-        <TextView android:text="@string/minimo" />
+        <TextView android:text="@string/minimo"
+            android:layout_gravity="center_vertical|right"
+            android:paddingRight="25dp" />
+
         <EditText
-            android:id="@+id/editminimo"
+            android:id="@+id/editMinimo"
             android:inputType="text"
             android:maxLength="10"
             android:enabled ="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:cursorVisible="false"
-            android:longClickable="false"/>
+            android:longClickable="false"
+            android:layout_column="1" />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/maximo" />
+        <TextView android:text="@string/maximo"
+            android:paddingRight="25dp"
+            android:layout_gravity="center_vertical|right"/>
+
         <EditText
-            android:id="@+id/editmaximo"
+            android:id="@+id/editMaximo"
             android:inputType="text"
             android:maxLength="10"
             android:enabled ="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:cursorVisible="false"
-            android:longClickable="false"/>
+            android:longClickable="false"
+            android:layout_column="1" />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/promedio" />
+        <TextView android:text="@string/promedio"
+            android:paddingRight="25dp"
+            android:layout_gravity="center_vertical|right"/>
+
         <EditText
-            android:id="@+id/editpromedio"
+            android:id="@+id/editPromedio"
             android:inputType="text"
             android:maxLength="10"
             android:enabled ="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:cursorVisible="false"
-            android:longClickable="false"/>
+            android:longClickable="false"
+            android:layout_column="1" />
     </TableRow>
 
 </TableLayout>

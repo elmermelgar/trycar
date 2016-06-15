@@ -2,9 +2,9 @@
     <string name="app_name">Trycar</string>
     <string name="consultar">Consultar</string>
     <string name="guardar">Guardar</string>
-    <string name="minimo">Minimo</string>
-    <string name="maximo">Maximo</string>
-    <string name="promedio">Promedio</string>
+    <string name="minimo">Minimo :</string>
+    <string name="maximo">Maximo :</string>
+    <string name="promedio">Promedio :</string>
     <string name="rpm">RPM</string>
     <string name="temprefri">Temp Refri</string>
     <string name="tempamb">Temp  Amb</string>
@@ -19,5 +19,18 @@
     <string name="nombre">Nombre</string>
     <string name="email">Email</string>
     <string name="codigo">Codigo</string>
+    <string name="indicador">Indicador :</string>
+    <string name="estadisticas">Estadísticas</string>
+
+    <string-array name="indicadores_array">
+        <item>RPM</item>
+        <item>Engine</item>
+        <item>Speed</item>
+        <item>Temp Refri</item>
+        <item>Temp Amb</item>
+        <item>%Fuel</item>
+        <item>Tempo Oil</item>
+        <item>Level Fuel</item>
+    </string-array>
 
 </resources>
