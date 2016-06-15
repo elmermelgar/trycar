@@ -15,6 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Estadisticas" />
+        <activity android:name=".Monitoreo" />
+        <activity android:name=".DatosUsuario"></activity>
     </application>
 
 </manifest>
