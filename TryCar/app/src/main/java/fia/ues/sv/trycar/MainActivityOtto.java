@@ -11,7 +11,7 @@ public class MainActivityOtto extends ListActivity {
     private ListView listViewTabla;
 
     String[] menu = {"Usuario","Monitorear","Estadisticas"};
-    String[] activities = {null,"DatosUsuario","Monitoreo","EstadisticasActivity" };
+    String[] activities = {null,"DatosUsuarioActivity","Monitoreo","EstadisticasActivity" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

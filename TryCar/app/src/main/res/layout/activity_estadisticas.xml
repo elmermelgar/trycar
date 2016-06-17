@@ -43,7 +43,7 @@
     <TableRow>
         <TextView android:text="@string/minimo"
             android:layout_gravity="center_vertical|right"
-            android:paddingRight="25dp" />
+            android:paddingRight="20dp" />
 
         <EditText
             android:id="@+id/editMinimo"
@@ -58,7 +58,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/maximo"
-            android:paddingRight="25dp"
+            android:paddingRight="20dp"
             android:layout_gravity="center_vertical|right"/>
 
         <EditText
@@ -74,7 +74,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/promedio"
-            android:paddingRight="25dp"
+            android:paddingRight="20dp"
             android:layout_gravity="center_vertical|right"/>
 
         <EditText

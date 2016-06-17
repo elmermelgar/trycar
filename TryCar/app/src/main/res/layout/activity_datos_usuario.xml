@@ -2,39 +2,66 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip"
     android:paddingTop="30dip"
-    android:stretchColumns="1" >
-<TableRow>
-    <TextView
-        android:text="@string/nombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editnombre"
-        android:inputType="text"
-        android:maxLength="30"
-       />
+    android:stretchColumns="1">
 
-</TableRow>
-    <TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp">
+
         <TextView
-            android:text="@string/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <EditText
+            android:layout_span="2"
+            android:text="@string/usuario"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow android:layout_marginBottom="15dp">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editemail"
+            android:text="@string/nombre"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:id="@+id/editNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:inputType="text"
-            android:maxLength="30"
-            />
+            android:maxLength="30" />
 
     </TableRow>
+
+    <TableRow android:layout_marginBottom="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:layout_gravity="center_vertical|right"
+            android:paddingRight="10dp" />
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="30" />
+
+    </TableRow>
+
     <TableRow>
+
         <Button
-            android:onClick=""
-            android:text="@string/guardar"/>
+            android:layout_column="0"
+            android:layout_span="2"
+            android:onClick="guardarDatosUsuario"
+            android:text="@string/guardar"
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </TableRow>
 </TableLayout>

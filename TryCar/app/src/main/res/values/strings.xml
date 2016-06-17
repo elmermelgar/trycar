@@ -16,11 +16,12 @@
     <string name="reporte">Reporte</string>
     <string name="envmail">Enviar mail</string>
     <string name="ruta">Ruta</string>
-    <string name="nombre">Nombre</string>
-    <string name="email">Email</string>
+    <string name="nombre">Nombre :</string>
+    <string name="email">Email :</string>
     <string name="codigo">Codigo</string>
     <string name="indicador">Indicador :</string>
     <string name="estadisticas">Estadísticas</string>
+    <string name="usuario">Usuario</string>
 
     <string-array name="indicadores_array">
         <item>RPM</item>

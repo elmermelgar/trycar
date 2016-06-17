@@ -63,6 +63,38 @@ public class BDControl {
         if (cursor.moveToFirst()) {
             respuesta[2] = cursor.getString(0);
         }
+        cursor.close();
+        return respuesta;
+    }
+    public String[] consultarDatosUsuario() {
+        String[] respuesta = new String[]{"",""};
+        Cursor cursor=db.rawQuery("Select * from USUARIO",new String[]{});
+        if (cursor.moveToFirst()){
+            respuesta[0]=cursor.getString(0);
+            respuesta[1]=cursor.getString(1);
+        }
+        cursor.close();
+        return respuesta;
+    }
+    public String guardarDatosUsuario(String nombre, String email) {
+        String respuesta="No se pudo guardar los datos";
+        long contador=0;
+        ContentValues cv = new ContentValues();
+        cv.put("USERNAME", nombre);
+        cv.put("EMAIL", email);
+        Cursor cursor=db.rawQuery("Select * from USUARIO",new String[]{});
+        if (cursor.moveToFirst()){
+            String username=cursor.getString(0);
+            cursor.close();
+            contador=db.update("USUARIO", cv, "USERNAME = ?", new String[]{username});
+        }
+        else{
+            cursor.close();
+            contador=db.insert("USUARIO",null,cv);
+        }
+        if (contador==1){
+            respuesta="Datos guardados";
+        }
         return respuesta;
     }
 
@@ -169,6 +201,8 @@ public class BDControl {
     }
         return enviado;
     }
+
+
 }
 
 

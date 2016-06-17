@@ -17,7 +17,7 @@ public class EstadisticasActivity extends AppCompatActivity implements AdapterVi
     EditText editMaximo;
     EditText editMinimo;
     EditText editPromedio;
-    BDControl db;
+    BDControl db= new BDControl(this);;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,9 @@ public class EstadisticasActivity extends AppCompatActivity implements AdapterVi
     }
 
     public void consultarEstadistica(View view) {
+        db.abrir();
         String[] resultado=db.consultarEstadistica(this,indicador);
+        db.cerrar();
         editMinimo.setText(resultado[0]);
         editMaximo.setText(resultado[1]);
         editPromedio.setText(resultado[2]);
