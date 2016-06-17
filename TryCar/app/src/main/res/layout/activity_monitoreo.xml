@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editrpm"
-            android:inputType="text"
+            android:inputType="number"
             android:maxLength="10"
             android:enabled ="false"
             android:focusable="false"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editspeed"
-            android:inputType="text"
+            android:inputType="number"
             android:maxLength="10"
             android:enabled ="false"
             android:focusable="false"
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/edittemprefri"
-                android:inputType="text"
+                android:inputType="number"
                 android:maxLength="10"
                 android:enabled ="false"
                 android:focusable="false"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editengine"
-                android:inputType="text"
+                android:inputType="number"
                 android:maxLength="10"
                 android:enabled ="false"
                 android:focusable="false"
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/edittempamb"
-                android:inputType="text"
+                android:inputType="number"
                 android:maxLength="10"
                 android:enabled ="false"
                 android:focusable="false"
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/edittempoil"
-                android:inputType="text"
+                android:inputType="number"
                 android:maxLength="10"
                 android:enabled ="false"
                 android:focusable="false"
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/editpercentfuel"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="10"
                     android:enabled ="false"
                     android:focusable="false"
@@ -141,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/editlevelfuel"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="10"
                     android:enabled ="false"
                     android:focusable="false"
@@ -157,14 +157,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick=""
+                android:onClick="guardar"
                 android:text="@string/guardar"/>
             </LinearLayout>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick=""
+                android:onClick="mostrarReporte"
                 android:text="@string/reporte"
                 android:layout_column="1" />
         </TableRow>
@@ -175,14 +175,14 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick=""
+                    android:onClick="enviarEmail"
                     android:text="@string/envmail"/>
             </LinearLayout>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick=""
+                android:onClick="mostrarRuta"
                 android:text="@string/ruta"
                 android:layout_column="1" />
         </TableRow>
