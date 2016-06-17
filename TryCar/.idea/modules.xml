@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TryCar.iml" filepath="$PROJECT_DIR$/TryCar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javamail/javamail.iml" filepath="$PROJECT_DIR$/javamail/javamail.iml" />
       <module fileurl="file://$PROJECT_DIR$/obd-java-api-master/obd-java-api-master.iml" filepath="$PROJECT_DIR$/obd-java-api-master/obd-java-api-master.iml" />
     </modules>
   </component>

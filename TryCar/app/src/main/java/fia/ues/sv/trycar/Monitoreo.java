@@ -195,6 +195,35 @@ EditText edtlevelfuel;
 
     }
 
+    public void enviarEmail(View v){
 
+        String nombreRemitente=null;
+        String direccionDestino=null;
+        String direccionRemite="trycar1000@gmail.com";
+        String subject="Diagnóstico del vehiculo \t"+new Date();
+        String contenido=null;
+
+        db.abrir();
+        nombreRemitente=db.getNameUser();
+        direccionDestino=db.getEmailUser();
+        db.cerrar();
+        contenido=rpmCommand.getFormattedResult()+"\n"+
+                speedCommand.getFormattedResult()+"\n"+
+                oilTempCommand.getFormattedResult()+"\n"+
+                airFuelRatioCommand.getFormattedResult()+"\n"+
+                loadCommand.getFormattedResult()+"\n"+
+                consumptionRateCommand.getFormattedResult()+"\n"+
+                fuelLevelCommand.getFormattedResult()+"\n"+
+                engineCoolantTemperatureCommand.getFormattedResult();
+
+        boolean enviado=db.sendMail(nombreRemitente,direccionRemite,direccionDestino,subject,contenido);
+
+        if(enviado)
+            Toast.makeText(this,"Correo enviado",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Error al enviar correo",Toast.LENGTH_LONG).show();
+
+
+
+    }
 
 }
