@@ -200,22 +200,29 @@ public class BDControl {
         return enviado;
     }
 
-    public void consultarMonitoreo(Context ctx){
+    public String[] consultarMonitoreo(Context ctx){
         abrir();
         Cursor cursor = db.rawQuery("select * from MONITOREO", new String[]{});
         if(!cursor.moveToFirst()){
             String msg="No hay registros";
             Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
-            return;
+            return null;
         }
         else{
+            String[] resultado=new String[cursor.getCount()*9];
+            resultado[0]= String.valueOf(cursor.getCount());
+            int indice=1;
             while(!cursor.isAfterLast()) {
                 //ACA LO QUE QUERRAS HACER CON CADAD REGISTRO
+                for(int i=0;i<10;i++){
+                    resultado[indice]=cursor.getString(i);
+                    indice++;
+                }
                 cursor.moveToNext();
             }
             cursor.close();
             cerrar();
-            return;
+            return resultado;
         }
     }
 
