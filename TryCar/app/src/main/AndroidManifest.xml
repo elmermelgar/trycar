@@ -18,6 +18,7 @@
         <activity android:name=".EstadisticasActivity" />
         <activity android:name=".Monitoreo" />
         <activity android:name=".DatosUsuarioActivity"></activity>
+        <activity android:name=".MainActivityOtto"></activity>
     </application>
 
 </manifest>

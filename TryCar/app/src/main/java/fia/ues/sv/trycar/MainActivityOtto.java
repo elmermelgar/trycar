@@ -16,7 +16,7 @@ public class MainActivityOtto extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.otto_activity_main);
         Tabla tabla_data[] = new Tabla[]
                 {
 
@@ -44,7 +44,7 @@ public class MainActivityOtto extends ListActivity {
                     if (activities[position] != null) {
                         nombreValue = activities[position];
                         try {
-                            Class<?> clase = Class.forName("tarea2.trycar." + nombreValue);
+                            Class<?> clase = Class.forName("fia.ues.sv.trycar." + nombreValue);
                             Intent inte = new Intent();
                             inte.setClass(view.getContext(), clase);
                             startActivity(inte);
