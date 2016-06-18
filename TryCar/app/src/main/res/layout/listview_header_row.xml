@@ -15,7 +15,7 @@
         android:textSize="24dp"
         android:textColor="#FFFFFF"
         android:padding="10dp"
-        android:text="Gestión de Actividades-FIA"
+        android:text="TryCar"
         android:background="#336699" />
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 
@@ -23,20 +24,19 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-/**
- * Created by David-PC on 13/6/2016.
- */
-public class BDControl {
 
+public class BDControl {
 
     private final Context context;
     private DataBaseHelper DBHelper;
     private SQLiteDatabase db;
 
-
     public BDControl(Context ctx) {
         this.context = ctx;
         DBHelper = new DataBaseHelper(context);
+        //abrir();
+        //DBHelper.onCreate(db);
+        //cerrar();
     }
 
     public void abrir() throws SQLException {
@@ -124,7 +124,6 @@ public class BDControl {
             return true;
         }
 
-
     }
 
     public String getEmailUser(){
@@ -172,7 +171,6 @@ public class BDControl {
 
     try{
 
-
             Session mailSession = Session.getInstance(props, new Authenticator() {
 
             private PasswordAuthentication auth;
@@ -202,9 +200,4 @@ public class BDControl {
         return enviado;
     }
 
-
 }
-
-
-
-
