@@ -127,12 +127,12 @@ EditText edtlevelfuel;
             try {
                 speedCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 rpmCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+              //  ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+              //  oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+               // consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+               // engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+               // fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
 
                 //Setting the EditText
                 //Si el comando retorna un null le pone 0.00
@@ -145,8 +145,11 @@ EditText edtlevelfuel;
                 this.edtlevelfuel.setText(fuelLevelCommand.getCalculatedResult()!=null?fuelLevelCommand.getCalculatedResult():"0.00");
                 this.edttemprefri.setText(engineCoolantTemperatureCommand.getCalculatedResult()!=null?engineCoolantTemperatureCommand.getCalculatedResult():"0.00");
 
-                Thread.currentThread().sleep(5000);
+                System.out.println("RPM:" + rpmCommand.getFormattedResult());
+                System.out.println("Velocidad:" + speedCommand.getFormattedResult());
+                System.out.println("Algo: " + loadCommand.getFormattedResult());
 
+                Thread.currentThread().sleep(10000);
 
 
             } catch (IOException e) {
