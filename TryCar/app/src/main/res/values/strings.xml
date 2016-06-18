@@ -25,13 +25,13 @@
 
     <string-array name="indicadores_array">
         <item>RPM</item>
-        <item>Engine</item>
         <item>Speed</item>
-        <item>Temp Refri</item>
-        <item>Temp Amb</item>
-        <item>%Fuel</item>
         <item>Tempo Oil</item>
+        <item>Temp Amb</item>
+        <item>Temp Refri</item>
+        <item>Engine</item>
         <item>Level Fuel</item>
+        <item>%Fuel</item>
     </string-array>
 
 </resources>

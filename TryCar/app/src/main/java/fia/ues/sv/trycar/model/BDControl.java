@@ -34,9 +34,6 @@ public class BDControl {
     public BDControl(Context ctx) {
         this.context = ctx;
         DBHelper = new DataBaseHelper(context);
-        //abrir();
-        //DBHelper.onCreate(db);
-        //cerrar();
     }
 
     public void abrir() throws SQLException {
@@ -48,7 +45,8 @@ public class BDControl {
     }
 
     public String[] consultarEstadistica(Context ctx, String indicador) {
-        String[] respuesta = new String[]{};
+        String[] respuesta = new String[]{"","",""};
+        Log.v("indicador",indicador);
         Cursor cursor = db.rawQuery("Select avg(" + indicador + ") from MONITOREO", new String[]{});
         if (cursor.moveToFirst()) {
             respuesta[0] = cursor.getString(0);

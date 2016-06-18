@@ -2,11 +2,13 @@ package fia.ues.sv.trycar;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import fia.ues.sv.trycar.model.BDControl;
 
@@ -35,6 +37,7 @@ public class EstadisticasActivity extends AppCompatActivity implements AdapterVi
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         indicador=indicadores[pos];
+        Toast.makeText(this, indicador, Toast.LENGTH_SHORT).show();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
