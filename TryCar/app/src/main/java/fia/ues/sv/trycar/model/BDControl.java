@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
-
 
 
 import java.util.Properties;
@@ -45,53 +45,54 @@ public class BDControl {
     }
 
     public String[] consultarEstadistica(Context ctx, String indicador) {
-        String[] respuesta = new String[]{"","",""};
-        Log.v("indicador",indicador);
-        Cursor cursor = db.rawQuery("Select avg(" + indicador + ") from MONITOREO", new String[]{});
+        String[] respuesta = new String[]{"", "", ""};
+        Log.v("indicador", indicador);
+        Cursor cursor = db.rawQuery("Select min(" + indicador + ") from MONITOREO", new String[]{});
         if (cursor.moveToFirst()) {
             respuesta[0] = cursor.getString(0);
         }
         cursor.close();
-        cursor = db.rawQuery("Select min(" + indicador + ") from MONITOREO", new String[]{});
+        cursor = db.rawQuery("Select max(" + indicador + ") from MONITOREO", new String[]{});
         if (cursor.moveToFirst()) {
             respuesta[1] = cursor.getString(0);
         }
         cursor.close();
-        cursor = db.rawQuery("Select max(" + indicador + ") from MONITOREO", new String[]{});
+        cursor = db.rawQuery("Select avg(" + indicador + ") from MONITOREO", new String[]{});
         if (cursor.moveToFirst()) {
             respuesta[2] = cursor.getString(0);
         }
         cursor.close();
         return respuesta;
     }
+
     public String[] consultarDatosUsuario() {
-        String[] respuesta = new String[]{"",""};
-        Cursor cursor=db.rawQuery("Select * from USUARIO",new String[]{});
-        if (cursor.moveToFirst()){
-            respuesta[0]=cursor.getString(0);
-            respuesta[1]=cursor.getString(1);
+        String[] respuesta = new String[]{"", ""};
+        Cursor cursor = db.rawQuery("Select * from USUARIO", new String[]{});
+        if (cursor.moveToFirst()) {
+            respuesta[0] = cursor.getString(0);
+            respuesta[1] = cursor.getString(1);
         }
         cursor.close();
         return respuesta;
     }
+
     public String guardarDatosUsuario(String nombre, String email) {
-        String respuesta="No se pudo guardar los datos";
-        long contador=0;
+        String respuesta = "No se pudo guardar los datos";
+        long contador = 0;
         ContentValues cv = new ContentValues();
         cv.put("USERNAME", nombre);
         cv.put("EMAIL", email);
-        Cursor cursor=db.rawQuery("Select * from USUARIO",new String[]{});
-        if (cursor.moveToFirst()){
-            String username=cursor.getString(0);
+        Cursor cursor = db.rawQuery("Select * from USUARIO", new String[]{});
+        if (cursor.moveToFirst()) {
+            String username = cursor.getString(0);
             cursor.close();
-            contador=db.update("USUARIO", cv, "USERNAME = ?", new String[]{username});
-        }
-        else{
+            contador = db.update("USUARIO", cv, "USERNAME = ?", new String[]{username});
+        } else {
             cursor.close();
-            contador=db.insert("USUARIO",null,cv);
+            contador = db.insert("USUARIO", null, cv);
         }
-        if (contador==1){
-            respuesta="Datos guardados";
+        if (contador == 1) {
+            respuesta = "Datos guardados";
         }
         return respuesta;
     }
@@ -124,9 +125,9 @@ public class BDControl {
 
     }
 
-    public String getEmailUser(){
-        String email=null;
-        Cursor cursor = db.rawQuery("Select EMAIL from USUARIO",null);
+    public String getEmailUser() {
+        String email = null;
+        Cursor cursor = db.rawQuery("Select EMAIL from USUARIO", null);
         if (cursor.moveToFirst()) {
             email = cursor.getString(0);
         }
@@ -136,9 +137,9 @@ public class BDControl {
     }
 
 
-    public String getNameUser(){
-        String username=null;
-        Cursor cursor = db.rawQuery("Select USERNAME from USUARIO",null);
+    public String getNameUser() {
+        String username = null;
+        Cursor cursor = db.rawQuery("Select USERNAME from USUARIO", null);
         if (cursor.moveToFirst()) {
             username = cursor.getString(0);
         }
@@ -150,7 +151,7 @@ public class BDControl {
 
     public boolean sendMail(String nombreRemitente, String direccionRemite, String direccionDestino, String subject, String contenido) {
         final String miCorreo = "trycar1000@gmail.com";
-        final String miContraseña="trycar123";
+        final String miContraseña = "trycar123";
         final String servidorSMTP = "smtp.gmail.com";
         final String puertoEnvio = "465";
 
@@ -167,35 +168,55 @@ public class BDControl {
         props.put("mail.smtp.socketFactory.fallback", "false");
 
 
-    try{
+        try {
 
             Session mailSession = Session.getInstance(props, new Authenticator() {
 
-            private PasswordAuthentication auth;
+                private PasswordAuthentication auth;
+
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
-                auth = new PasswordAuthentication(miCorreo,miContraseña);
-                return auth;
-            }
-        });
+                    auth = new PasswordAuthentication(miCorreo, miContraseña);
+                    return auth;
+                }
+            });
 
-        Transport transport = mailSession.getTransport();
-        MimeMessage message = new MimeMessage(mailSession);
-        message.setFrom(new InternetAddress(direccionRemite, nombreRemitente));
-        message.setSender(new InternetAddress(direccionRemite, nombreRemitente));
-        message.setSubject(subject);
-        message.setContent(contenido, "text/html");
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(direccionDestino));
-        transport.connect();
-        transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
-        transport.close();
-        enviado = true;
-    }catch (UnsupportedEncodingException ex) {
-        Logger.getLogger(BDControl.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (MessagingException ex) {
-        Logger.getLogger(BDControl.class.getName()).log(Level.SEVERE, null, ex);
-    }
+            Transport transport = mailSession.getTransport();
+            MimeMessage message = new MimeMessage(mailSession);
+            message.setFrom(new InternetAddress(direccionRemite, nombreRemitente));
+            message.setSender(new InternetAddress(direccionRemite, nombreRemitente));
+            message.setSubject(subject);
+            message.setContent(contenido, "text/html");
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(direccionDestino));
+            transport.connect();
+            transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+            transport.close();
+            enviado = true;
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(BDControl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(BDControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return enviado;
+    }
+
+    public void consultarMonitoreo(Context ctx){
+        abrir();
+        Cursor cursor = db.rawQuery("select * from MONITOREO", new String[]{});
+        if(!cursor.moveToFirst()){
+            String msg="No hay registros";
+            Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            while(!cursor.isAfterLast()) {
+                //ACA LO QUE QUERRAS HACER CON CADAD REGISTRO
+                cursor.moveToNext();
+            }
+            cursor.close();
+            cerrar();
+            return;
+        }
     }
 
 }
