@@ -12,12 +12,12 @@ import fia.ues.sv.trycar.model.BDControl;
 
 public class EstadisticasActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     String indicador;
-    private final String[] indicadores=new String[]{""};
+    private final String[] indicadores=new String[]{"RPM","SPEED","OIL_TEMP","AMBI_TEMP","REFRI_TEMP","LOAD_ENGINE","LEVEL_FUEL","RATE_FUEL"};
     Spinner indicadorSpinner;
     EditText editMaximo;
     EditText editMinimo;
     EditText editPromedio;
-    BDControl db= new BDControl(this);;
+    BDControl db= new BDControl(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
