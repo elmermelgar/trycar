@@ -13,8 +13,8 @@ import fia.ues.sv.trycar.model.BDControl;
 public class MainActivity extends Activity {
     private ListView listViewTabla;
 
-    String[] menu = {"Usuario","Monitorear","Estadisticas"};
-    String[] activities = {null,"DatosUsuarioActivity","Monitoreo","EstadisticasActivity" };
+    String[] menu = {"Usuario","Monitorear","Estadisticas","Generar PDF"};
+    String[] activities = {null,"DatosUsuarioActivity","Monitoreo","EstadisticasActivity","GenerarPDFActivity" };
     BDControl db;
 
     @Override
@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
                         new Tabla(R.drawable.usuario, "Usuario"),
                         new Tabla(R.drawable.monitoreo, "Monitorear"),
                         new Tabla(R.drawable.estadistica, "Estadistica"),
+                        new Tabla(R.drawable.pdf, "Reporte"),
 
                 };
 
