@@ -40,17 +40,20 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import fia.ues.sv.trycar.R;
+import fia.ues.sv.trycar.model.BDControl;
 
 public class GenerarPDFActivity extends Activity {
 
     private static final String NOMBRE_CARPETA_APP = "trycar.pdfgenerator";
     private static final String GENERADOS = "MisPDFs";
+    BDControl db;
 
     Button btn_generar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db= new BDControl(this);
         setContentView(R.layout.activity_generar_pdf);
 
         btn_generar=(Button)findViewById(R.id.btn_generarPDF);
@@ -123,10 +126,15 @@ public class GenerarPDFActivity extends Activity {
             tabla.addCell("Encabezado 3");
             tabla.addCell("Encabezado 4");
             tabla.addCell("Encabezado 5");
+
+            //String[] registros=db.consultarMonitoreo(this);
+            //Log.v("registros", registros[0]);
+
             for (int i = 0; i < 15; i++) {
                 tabla.addCell("Celda " + i);
             }
             document.add(tabla);
+            document.add(new LineSeparator());
 
 
         } catch (DocumentException e) {
