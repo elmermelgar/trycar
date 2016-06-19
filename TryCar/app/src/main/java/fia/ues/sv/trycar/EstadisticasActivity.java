@@ -36,7 +36,6 @@ public class EstadisticasActivity extends AppCompatActivity implements AdapterVi
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         indicador=indicadores[pos];
-        Toast.makeText(this, indicador, Toast.LENGTH_SHORT).show();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

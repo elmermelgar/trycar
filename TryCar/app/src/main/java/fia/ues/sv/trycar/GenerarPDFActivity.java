@@ -1,8 +1,6 @@
 package fia.ues.sv.trycar;
 
 import android.app.Activity;
-import android.os.Bundle;
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -10,41 +8,37 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
-import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
-import java.util.Calendar;
-import java.util.Date;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.draw.LineSeparator;
-import com.itextpdf.text.pdf.draw.VerticalPositionMark;
-import fia.ues.sv.trycar.R;
+import fia.ues.sv.trycar.model.BDControl;
 
 public class GenerarPDFActivity extends Activity {
 
     private static final String NOMBRE_CARPETA_APP = "trycar.pdfgenerator";
     private static final String GENERADOS = "MisPDFs";
+    BDControl db;
 
     Button btn_generar;
 
@@ -52,7 +46,7 @@ public class GenerarPDFActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generar_pdf);
-
+        db=new BDControl(this);
         btn_generar=(Button)findViewById(R.id.btn_generarPDF);
     }
     public void generarPDFOnClick(View v){
@@ -65,6 +59,7 @@ public class GenerarPDFActivity extends Activity {
         if (!pdfDir.exists()){
             pdfDir.mkdir();
         }
+
         File pdfSubDir=new File(pdfDir.getPath() + File.separator + GENERADOS);
         if (!pdfSubDir.exists()){
             pdfSubDir.mkdir();
@@ -80,7 +75,7 @@ public class GenerarPDFActivity extends Activity {
 
         try {
             PdfWriter pdfWriter=PdfWriter.getInstance(document, new FileOutputStream(nombre_completo));
-            /*Crear El documento*/
+            //Crear El documento
             document.open();
             document.addAuthor("Elmer Melgar");
             document.addCreator("Creador");
@@ -117,14 +112,20 @@ public class GenerarPDFActivity extends Activity {
             document.add(new Paragraph(" "));
             document.add(new VerticalPositionMark());
             // Insertamos una tabla.
-            PdfPTable tabla = new PdfPTable(5);
-            tabla.addCell("Encabezado 1");
-            tabla.addCell("Encabezado 2");
-            tabla.addCell("Encabezado 3");
-            tabla.addCell("Encabezado 4");
-            tabla.addCell("Encabezado 5");
-            for (int i = 0; i < 15; i++) {
-                tabla.addCell("Celda " + i);
+            PdfPTable tabla = new PdfPTable(9);
+            tabla.addCell("RPM");
+            tabla.addCell("Speed");
+            tabla.addCell("Temp Oil");
+            tabla.addCell("Temp Amb");
+            tabla.addCell("Temp Refri");
+            tabla.addCell("Engine");
+            tabla.addCell("Level Fuel");
+            tabla.addCell("%Fuel");
+            tabla.addCell("Fecha");
+
+            String[] resultado=db.consultarMonitoreo(this);
+            for (int i = 0; i < resultado.length; i++) {
+                tabla.addCell(resultado[i]);
             }
             document.add(tabla);
 
