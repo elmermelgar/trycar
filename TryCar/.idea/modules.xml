@@ -3,8 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TryCar.iml" filepath="$PROJECT_DIR$/TryCar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/activation/activation.iml" filepath="$PROJECT_DIR$/activation/activation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/additionnal/additionnal.iml" filepath="$PROJECT_DIR$/additionnal/additionnal.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/javamail/javamail.iml" filepath="$PROJECT_DIR$/javamail/javamail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javax.mail-1.5.5/javax.mail-1.5.5.iml" filepath="$PROJECT_DIR$/javax.mail-1.5.5/javax.mail-1.5.5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mail/mail.iml" filepath="$PROJECT_DIR$/mail/mail.iml" />
       <module fileurl="file://$PROJECT_DIR$/obd-java-api-master/obd-java-api-master.iml" filepath="$PROJECT_DIR$/obd-java-api-master/obd-java-api-master.iml" />
     </modules>
   </component>

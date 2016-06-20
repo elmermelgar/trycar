@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('javax.mail-1.5.5.jar'))

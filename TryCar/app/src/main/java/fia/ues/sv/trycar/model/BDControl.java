@@ -16,13 +16,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.activation.DataHandler;
+
 
 
 public class BDControl {
@@ -104,12 +109,12 @@ public class BDControl {
         ContentValues moni = new ContentValues();
         moni.put("RPM", monitoreo.getRpm());
         moni.put("SPEED", monitoreo.getSpeed());
-        moni.put("OIL_TEMP", monitoreo.getTempOil());
-        moni.put("AMBI_TEMP", monitoreo.getTempAmb());
+        //moni.put("OIL_TEMP", monitoreo.getTempOil());
+       // moni.put("AMBI_TEMP", monitoreo.getTempAmb());
         moni.put("REFRI_TEMP", monitoreo.getTempRefri());
         moni.put("LOAD_ENGINE", monitoreo.getEngine());
         moni.put("LEVEL_FUEL", monitoreo.getLevelFuel());
-        moni.put("RATE_FUEL", monitoreo.getPerFuel());
+        //moni.put("RATE_FUEL", monitoreo.getPerFuel());
         moni.put("FECHA", monitoreo.getFecha().toString());
         /*moni.put("LATITUD" , monitoreo.getLatitud());
         moni.put("LONGITUD" , monitoreo.getLongitud());
@@ -158,6 +163,7 @@ public class BDControl {
         boolean enviado = false;
 
         Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
         props.put("mail.smtp.user", miCorreo);
         props.put("mail.smtp.host", servidorSMTP);
         props.put("mail.smtp.port", puertoEnvio);
@@ -186,7 +192,14 @@ public class BDControl {
             message.setFrom(new InternetAddress(direccionRemite, nombreRemitente));
             message.setSender(new InternetAddress(direccionRemite, nombreRemitente));
             message.setSubject(subject);
-            message.setContent(contenido, "text/html");
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(contenido);
+            MimeMultipart _multipart = new MimeMultipart();
+            _multipart.addBodyPart(messageBodyPart);
+            message.setContent(_multipart);
+            //message.setContent(contenido, "text/html");
+
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(direccionDestino));
             transport.connect();
             transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
