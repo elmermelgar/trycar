@@ -223,11 +223,10 @@ public class BDControl {
         }
         else{
             String[] resultado=new String[cursor.getCount()*9];
-            resultado[0]= String.valueOf(cursor.getCount());
-            int indice=1;
+            int indice=0;
             while(!cursor.isAfterLast()) {
                 //ACA LO QUE QUERRAS HACER CON CADAD REGISTRO
-                for(int i=0;i<10;i++){
+                for(int i=1;i<10;i++){
                     resultado[indice]=cursor.getString(i);
                     indice++;
                 }

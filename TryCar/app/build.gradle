@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "fia.ues.sv.trycar"
-        minSdkVersion 16
+        minSdkVersion 10
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
