@@ -59,7 +59,7 @@ public class GenerarPDFActivity extends Activity {
         super.onCreate(savedInstanceState);
         db= new BDControl(this);
         setContentView(R.layout.activity_generar_pdf);
-        db=new BDControl(this);
+
         btn_generar=(Button)findViewById(R.id.btn_generarPDF);
     }
     public void generarPDFOnClick(View v){

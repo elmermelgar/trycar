@@ -4,6 +4,15 @@
     android:layout_height="wrap_content"
     android:paddingTop="30dip"
     android:stretchColumns="1" >
+    <TableLayout>
+        <TextView
+            android:text="MONITOREO"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textColor="#000080"
+            android:background="#DCDCDC"/>
+        <TextView />
+    </TableLayout>
     <TableRow>
        <LinearLayout
            android:layout_width="fill_parent"
@@ -13,7 +22,8 @@
         <TextView android:text="@string/rpm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,13 +32,14 @@
             android:maxLength="10"
             android:enabled ="false"
             android:focusable="false"
-
+            android:width="120dp"
             android:cursorVisible="false"
             android:longClickable="false" />
         <TextView android:text="@string/speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +51,8 @@
             android:focusableInTouchMode="false"
             android:cursorVisible="false"
             android:longClickable="false"
-            android:layout_weight="0.63" />
+            android:layout_weight="0.63"
+            android:width="130dp"/>
        </LinearLayout>
 
     </TableRow>
@@ -52,7 +64,8 @@
             <TextView android:text="@string/temprefri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:textSize="20dp"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,11 +77,12 @@
                 android:focusableInTouchMode="false"
                 android:cursorVisible="false"
                 android:longClickable="false"
-                android:layout_weight="1.48" />
+                android:width="80dp" />
             <TextView android:text="@string/engine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:textSize="20dp"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,7 +93,8 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:cursorVisible="false"
-                android:longClickable="false"/>
+                android:longClickable="false"
+                android:width="120dp"/>
         </LinearLayout>
     </TableRow>
     <TableRow android:orientation="horizontal">
@@ -89,7 +104,8 @@
             android:orientation="horizontal">
             <TextView android:text="@string/tempamb"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="20dp"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,10 +116,12 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:cursorVisible="false"
-                android:longClickable="false"/>
+                android:longClickable="false"
+                android:width="70dp"/>
             <TextView android:text="@string/tempoil"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="20dp"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,7 +132,8 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:cursorVisible="false"
-                android:longClickable="false"/>
+                android:longClickable="false"
+                android:width="110dp"/>
         </LinearLayout>
         </TableRow>
         <TableRow android:orientation="horizontal">
@@ -123,7 +142,8 @@
                 android:layout_height="wrap_content">
                 <TextView android:text="@string/percentfuel"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"/>
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,10 +154,12 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:cursorVisible="false"
-                    android:longClickable="false"/>
+                    android:longClickable="false"
+                    android:width="100dp"/>
                 <TextView android:text="@string/levelfuel"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"/>
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -148,7 +170,8 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:cursorVisible="false"
-                    android:longClickable="false"/>
+                    android:longClickable="false"
+                    android:width="90dp"/>
             </LinearLayout>
        </TableRow>
         <TableRow>
