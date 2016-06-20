@@ -127,12 +127,12 @@ EditText edtlevelfuel;
             try {
                 speedCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 rpmCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-              //  ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-              //  oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+//               ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+  //             oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-               // consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-               // engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-               // fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+   //            consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
 
                 //Setting the EditText
                 //Si el comando retorna un null le pone 0.00
@@ -148,6 +148,8 @@ EditText edtlevelfuel;
                 System.out.println("RPM:" + rpmCommand.getFormattedResult());
                 System.out.println("Velocidad:" + speedCommand.getFormattedResult());
                 System.out.println("Algo: " + loadCommand.getFormattedResult());
+                System.out.println("engenie: " + engineCoolantTemperatureCommand.getFormattedResult());
+                System.out.println("fue: " + fuelLevelCommand.getFormattedResult());
 
                 Thread.currentThread().sleep(10000);
 

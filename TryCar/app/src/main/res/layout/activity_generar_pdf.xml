@@ -11,8 +11,8 @@
 
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
         android:text="Generar PDF"
         android:id="@+id/btn_generarPDF"
         android:onClick="generarPDFOnClick"

@@ -124,24 +124,32 @@ public class GenerarPDFActivity extends Activity {
             document.add(imagentry);
             document.add(new Paragraph(" "));
             document.add(new VerticalPositionMark());
-            // Insertamos una tabla.
-            PdfPTable tabla = new PdfPTable(9);
-            tabla.addCell("RPM");
-            tabla.addCell("Speed");
-            tabla.addCell("Temp Oil");
-            tabla.addCell("Temp Amb");
-            tabla.addCell("Temp Refri");
-            tabla.addCell("Engine");
-            tabla.addCell("Level Fuel");
-            tabla.addCell("%Fuel");
-            tabla.addCell("Fecha");
 
+            // Insertamos una tabla.
             String[] resultado=db.consultarMonitoreo(this);
-            for (int i = 0; i < resultado.length; i++) {
-                tabla.addCell(resultado[i]);
+            if (resultado==null){
+                document.add(new Paragraph("No Existen DATOS para Mostrar"));
+                Toast.makeText(this, "No existen datos en la Base de Datos", Toast.LENGTH_LONG).show();
+            }else {
+                // Insertamos una tabla.
+                PdfPTable tabla = new PdfPTable(9);
+                tabla.addCell("RPM");
+                tabla.addCell("Speed");
+                tabla.addCell("Temp Oil");
+                tabla.addCell("Temp Amb");
+                tabla.addCell("Temp Refri");
+                tabla.addCell("Engine");
+                tabla.addCell("Level Fuel");
+                tabla.addCell("%Fuel");
+                tabla.addCell("Fecha");
+
+                for (int i = 0; i < resultado.length; i++) {
+                    tabla.addCell(resultado[i]);
+                }
+                document.add(tabla);
             }
-            document.add(tabla);
-            document.add(new LineSeparator());
+
+
 
 
         } catch (DocumentException e) {
