@@ -221,8 +221,12 @@ EditText edtlevelfuel;
         Double engine=Double.parseDouble(edtengine.getText().toString());
         Double levelFuel=Double.parseDouble(edtlevelfuel.getText().toString());
         //Double rateFuel=Double.parseDouble(edtrpm.getText().toString());
-        SimpleDateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
-        String fecha=dateFormat.format(new Date());
+
+
+        SimpleDateFormat sdfAmerica = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a");
+        sdfAmerica.setTimeZone(TimeZone.getTimeZone("America/El_Salvador"));
+        Date date = new Date();
+        String sDateInAmerica = sdfAmerica.format(date);
 
         fia.ues.sv.trycar.model.Monitoreo monitoreo=new fia.ues.sv.trycar.model.Monitoreo();
 
@@ -234,14 +238,14 @@ EditText edtlevelfuel;
         monitoreo.setEngine(engine);
         monitoreo.setLevelFuel(levelFuel);
         //monitoreo.setPerFuel(rateFuel);
-        monitoreo.setFecha(new Date());
+        monitoreo.setFecha(sDateInAmerica);
 
         db.abrir();
         boolean insertado=db.insertar(monitoreo);
         db.cerrar();
         if(insertado)
             Toast.makeText(this, "Registro guardado", Toast.LENGTH_SHORT).show();
-       else
+        else
             Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show();
 
     }
@@ -267,15 +271,15 @@ EditText edtlevelfuel;
         db.cerrar();
 
         nombreRemitente="TryCar";
-        //direccionDestino="elmermelgar999@gmail.com";
+
        contenido=rpmCommand.getFormattedResult()+"\n"+
                 speedCommand.getFormattedResult()+"\n"+
                 //oilTempCommand.getFormattedResult()+"\n"+
                // airFuelRatioCommand.getFormattedResult()+"\n"+
-                loadCommand.getFormattedResult()+"\n"+
+                loadCommand.getFormattedResult()+"Carga del motor"+"\n"+
                 //consumptionRateCommand.getFormattedResult()+"\n"+
-                fuelLevelCommand.getFormattedResult()+"\n"+
-                engineCoolantTemperatureCommand.getFormattedResult();
+                fuelLevelCommand.getFormattedResult()+"Nivel de combustible"+"\n"+
+                engineCoolantTemperatureCommand.getFormattedResult()+"Temperatura del motor";
 
        // contenido="Esto es una prueba";
 

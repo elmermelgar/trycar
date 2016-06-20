@@ -15,13 +15,13 @@ public class Monitoreo {
     private Double engine;
     private Double levelFuel;
     private Double perFuel;
-    private Date fecha;
+    private String fecha;
     private Double latitud;
     private Double longitud;
     private Double altitud;
 
 
-    public Monitoreo(Double rpm, Double speed, Double tempOil, Double tempAmb, Double tempRefri, Double engine, Double levelFuel, Double perFuel, Date fecha, Double latitud, Double longitud, Double altitud) {
+    public Monitoreo(Double rpm, Double speed, Double tempOil, Double tempAmb, Double tempRefri, Double engine, Double levelFuel, Double perFuel, String fecha, Double latitud, Double longitud, Double altitud) {
         this.rpm = rpm;
         this.speed = speed;
         this.tempOil = tempOil;
@@ -103,11 +103,11 @@ public class Monitoreo {
         this.perFuel = perFuel;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

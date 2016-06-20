@@ -20,8 +20,8 @@
             android:id="@+id/editrpm"
             android:inputType="text"
             android:maxLength="10"
-            android:enabled ="true"
-            android:focusable="true"
+            android:enabled ="false"
+            android:focusable="false"
 
             android:cursorVisible="false"
             android:longClickable="false" />
@@ -42,6 +42,7 @@
             android:longClickable="false"
             android:layout_weight="0.63" />
        </LinearLayout>
+
     </TableRow>
     <TableRow android:orientation="horizontal">
         <LinearLayout
