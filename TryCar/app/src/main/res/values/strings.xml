@@ -15,7 +15,7 @@
     <string name="speed">Speed</string>
     <string name="reporte">Reporte</string>
     <string name="envmail">Enviar mail</string>
-    <string name="ruta">Ruta</string>
+    <string name="ruta">Ver Mapa</string>
     <string name="nombre">Nombre :</string>
     <string name="email">Email :</string>
     <string name="codigo">Codigo</string>
@@ -33,5 +33,6 @@
         <item>Level Fuel</item>
         <item>%Fuel</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

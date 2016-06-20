@@ -16,12 +16,12 @@ public class Monitoreo {
     private Double levelFuel;
     private Double perFuel;
     private String fecha;
-    private Double latitud;
-    private Double longitud;
-    private Double altitud;
+    private String latitud;
+    private String longitud;
+    private String altitud;
 
 
-    public Monitoreo(Double rpm, Double speed, Double tempOil, Double tempAmb, Double tempRefri, Double engine, Double levelFuel, Double perFuel, String fecha, Double latitud, Double longitud, Double altitud) {
+    public Monitoreo(Double rpm, Double speed, Double tempOil, Double tempAmb, Double tempRefri, Double engine, Double levelFuel, Double perFuel, String fecha, String latitud, String longitud, String altitud) {
         this.rpm = rpm;
         this.speed = speed;
         this.tempOil = tempOil;
@@ -111,27 +111,27 @@ public class Monitoreo {
         this.fecha = fecha;
     }
 
-    public Double getLatitud() {
+    public String getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(Double latitud) {
+    public void setLatitud(String latitud) {
         this.latitud = latitud;
     }
 
-    public Double getLongitud() {
+    public String getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(Double longitud) {
+    public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
 
-    public Double getAltitud() {
+    public String getAltitud() {
         return altitud;
     }
 
-    public void setAltitud(Double altitud) {
+    public void setAltitud(String altitud) {
         this.altitud = altitud;
     }
 }
