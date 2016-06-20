@@ -3,6 +3,7 @@ package fia.ues.sv.trycar;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.github.pires.obd.commands.fuel.ConsumptionRateCommand;
 import com.github.pires.obd.commands.fuel.FuelLevelCommand;
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
+import com.github.pires.obd.commands.protocol.ObdRawCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.commands.protocol.TimeoutCommand;
 import com.github.pires.obd.commands.temperature.AmbientAirTemperatureCommand;
@@ -24,9 +26,13 @@ import com.github.pires.obd.commands.temperature.EngineCoolantTemperatureCommand
 import com.github.pires.obd.enums.ObdProtocols;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import fia.ues.sv.trycar.model.BDControl;
@@ -53,6 +59,7 @@ EditText edtlevelfuel;
     BluetoothSocketWrapper bluetoothSocketWrapper;
     BluetoothDevice bluetoothDevice;
     //Commands OBD
+    ObdRawCommand obdRawCommand; //PIDS que soporta el carro del modo 01
     RPMCommand rpmCommand; //Revoluciones por minuto
     SpeedCommand speedCommand; //Velocidad Km/h
     AmbientAirTemperatureCommand ambientAirTemperatureCommand; //Temperatura ambiente interna
@@ -71,6 +78,10 @@ EditText edtlevelfuel;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoreo);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         edtrpm=(EditText)findViewById(R.id.editrpm);
         edtspeed=(EditText)findViewById(R.id.editspeed);
         edttempamb=(EditText)findViewById(R.id.edittempamb);
@@ -79,6 +90,8 @@ EditText edtlevelfuel;
         edtengine=(EditText)findViewById(R.id.editengine);
         edtper_fuel=(EditText)findViewById(R.id.editpercentfuel);
         edtlevelfuel=(EditText)findViewById(R.id.editlevelfuel);
+        db=new BDControl(this);
+
 
 
         //Getting the default bluetooth adapter
@@ -95,12 +108,14 @@ EditText edtlevelfuel;
         }
         try {
             //Initialization of OBD
+            new ObdRawCommand("AT D").run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
+            new ObdRawCommand("AT Z").run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
             new EchoOffCommand().run( bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
             new LineFeedOffCommand().run(  bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
-            new TimeoutCommand(10).run( bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
+            new TimeoutCommand(500).run( bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
             new SelectProtocolCommand(ObdProtocols.AUTO).run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
 
-            monitorear();
+           monitorear();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -110,8 +125,8 @@ EditText edtlevelfuel;
     }
 
     public void monitorear() throws InterruptedException {
-
-
+        //Comando para determinar que pids del modo 01 soporta el carro
+        obdRawCommand=new ObdRawCommand("01 00");
         rpmCommand= new RPMCommand();
         speedCommand=new SpeedCommand();
         engineCoolantTemperatureCommand=new EngineCoolantTemperatureCommand();
@@ -121,43 +136,70 @@ EditText edtlevelfuel;
         consumptionRateCommand=new ConsumptionRateCommand();
         fuelLevelCommand=new FuelLevelCommand();
 
+        new Thread() {
+            public void run() {
+                int i=0;
+                while (i++ < 50) {
+                    try {
+                        runOnUiThread(new Runnable() {
 
-        while(!Thread.currentThread().isInterrupted()){
+                            @Override
+                            public void run() {
+                                try{
+                                obdRawCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
 
-            try {
-                speedCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                rpmCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-              //  ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-              //  oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-               // consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-               // engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-               // fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                                speedCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                                rpmCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+//               ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+//                oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                                loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                                                                                                                                                                                                                                                                                                                                       /*SI*/       engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+//                consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                                fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
 
-                //Setting the EditText
-                //Si el comando retorna un null le pone 0.00
-                this.edtrpm.setText(rpmCommand.getCalculatedResult()!=null?rpmCommand.getCalculatedResult():"0.00");
-                this.edtspeed.setText(speedCommand.getCalculatedResult()!=null?speedCommand.getCalculatedResult():"0.00");
-                this.edttempamb.setText(ambientAirTemperatureCommand.getCalculatedResult()!=null?ambientAirTemperatureCommand.getCalculatedResult():"0.00");
-                this.edttempoil.setText(oilTempCommand.getCalculatedResult()!=null?oilTempCommand.getCalculatedResult():"0.00");
-                this.edtengine.setText(loadCommand.getCalculatedResult()!=null?loadCommand.getCalculatedResult():"0.00");
-                this.edtper_fuel.setText(consumptionRateCommand.getCalculatedResult()!=null?consumptionRateCommand.getCalculatedResult():"0.00");
-                this.edtlevelfuel.setText(fuelLevelCommand.getCalculatedResult()!=null?fuelLevelCommand.getCalculatedResult():"0.00");
-                this.edttemprefri.setText(engineCoolantTemperatureCommand.getCalculatedResult()!=null?engineCoolantTemperatureCommand.getCalculatedResult():"0.00");
-
-                System.out.println("RPM:" + rpmCommand.getFormattedResult());
-                System.out.println("Velocidad:" + speedCommand.getFormattedResult());
-                System.out.println("Algo: " + loadCommand.getFormattedResult());
-
-                Thread.currentThread().sleep(10000);
+                                //Setting the EditText
+                                //Si el comando retorna un null le pone 0.00
+                                //Thread.currentThread().sleep(5000);
+                                edtrpm.setText(rpmCommand.getCalculatedResult()!=null?rpmCommand.getCalculatedResult():"0.00");
+                                edtspeed.setText(speedCommand.getCalculatedResult()!=null?speedCommand.getCalculatedResult():"0.00");
+                                //             this.edttempamb.setText(ambientAirTemperatureCommand.getCalculatedResult()!=null?ambientAirTemperatureCommand.getCalculatedResult():"0.00");
+                                //this.edttempoil.setText(oilTempCommand.getCalculatedResult()!=null?oilTempCommand.getCalculatedResult():"0.00");
+                                edtengine.setText(loadCommand.getCalculatedResult()!=null?loadCommand.getCalculatedResult():"0.00");
+                                // this.edtper_fuel.setText(consumptionRateCommand.getCalculatedResult()!=null?consumptionRateCommand.getCalculatedResult():"0.00");
+                                edtlevelfuel.setText(fuelLevelCommand.getCalculatedResult()!=null?fuelLevelCommand.getCalculatedResult():"0.00");
+                                edttemprefri.setText(engineCoolantTemperatureCommand.getCalculatedResult()!=null?engineCoolantTemperatureCommand.getCalculatedResult():"0.00");
 
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+                                System.out.println("PID:" + obdRawCommand.getFormattedResult());
+
+                                System.out.println("Velocidad:" + speedCommand.getFormattedResult());
+                                System.out.println("RPM:" + rpmCommand.getFormattedResult());
+                                //           System.out.println("Temp Amb:" + ambientAirTemperatureCommand.getFormattedResult());
+                                //              System.out.println("Temp Oil:" + oilTempCommand.getFormattedResult());
+                                System.out.println("Carga del motor: " + loadCommand.getFormattedResult());
+                                System.out.println("Engine Coolant:" + engineCoolantTemperatureCommand.getFormattedResult());
+                                //              System.out.println("Consumo combustible(%):" + consumptionRateCommand.getFormattedResult());
+
+                                System.out.println("Nivel de combustible:" + fuelLevelCommand.getFormattedResult());
+                                //rpm=rpmCommand.getCalculatedResult();
+                                //Thread.currentThread().interrupt();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            }
+                        });
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        }.start();
+
 
     }
 
@@ -167,13 +209,13 @@ EditText edtlevelfuel;
         //Thread.currentThread().stop();
 
         Double rpm=Double.parseDouble(edtrpm.getText().toString());
-        Double speed=Double.parseDouble(edtrpm.getText().toString());
-        Double oilTem=Double.parseDouble(edtrpm.getText().toString());
-        Double ambTem=Double.parseDouble(edtrpm.getText().toString());
-        Double refriTem=Double.parseDouble(edtrpm.getText().toString());
-        Double engine=Double.parseDouble(edtrpm.getText().toString());
-        Double levelFuel=Double.parseDouble(edtrpm.getText().toString());
-        Double rateFuel=Double.parseDouble(edtrpm.getText().toString());
+        Double speed=Double.parseDouble(edtspeed.getText().toString());
+        //Double oilTem=Double.parseDouble(edtrpm.getText().toString());
+        //Double ambTem=Double.parseDouble(edtrpm.getText().toString());
+        Double refriTem=Double.parseDouble(edttemprefri.getText().toString());
+        Double engine=Double.parseDouble(edtengine.getText().toString());
+        Double levelFuel=Double.parseDouble(edtlevelfuel.getText().toString());
+        //Double rateFuel=Double.parseDouble(edtrpm.getText().toString());
         SimpleDateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
         String fecha=dateFormat.format(new Date());
 
@@ -181,13 +223,13 @@ EditText edtlevelfuel;
 
         monitoreo.setRpm(rpm);
         monitoreo.setSpeed(speed);
-        monitoreo.setTempOil(oilTem);
-        monitoreo.setTempAmb(ambTem);
+       // monitoreo.setTempOil(oilTem);
+        //monitoreo.setTempAmb(ambTem);
         monitoreo.setTempRefri(refriTem);
         monitoreo.setEngine(engine);
         monitoreo.setLevelFuel(levelFuel);
-        monitoreo.setPerFuel(rateFuel);
-        monitoreo.setFecha(new Date(fecha));
+        //monitoreo.setPerFuel(rateFuel);
+        monitoreo.setFecha(new Date());
 
         db.abrir();
         boolean insertado=db.insertar(monitoreo);
@@ -198,32 +240,46 @@ EditText edtlevelfuel;
 
     }
 
-    public void enviarEmail(View v){
+    public void enviarEmail(View v) throws ParseException {
 
+        boolean enviado;
+        SimpleDateFormat sdfAmerica = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a");
+        sdfAmerica.setTimeZone(TimeZone.getTimeZone("America/El_Salvador"));
+
+        Date date = new Date();
+
+        String sDateInAmerica = sdfAmerica.format(date);
         String nombreRemitente=null;
         String direccionDestino=null;
         String direccionRemite="trycar1000@gmail.com";
-        String subject="Diagnóstico del vehiculo \t"+new Date();
+        String subject="Diagnóstico del vehiculo \t"+sDateInAmerica;
         String contenido=null;
 
         db.abrir();
-        nombreRemitente=db.getNameUser();
+        //nombreRemitente=db.getNameUser();
         direccionDestino=db.getEmailUser();
         db.cerrar();
-        contenido=rpmCommand.getFormattedResult()+"\n"+
+
+        nombreRemitente="TryCar";
+        //direccionDestino="elmermelgar999@gmail.com";
+       contenido=rpmCommand.getFormattedResult()+"\n"+
                 speedCommand.getFormattedResult()+"\n"+
-                oilTempCommand.getFormattedResult()+"\n"+
-                airFuelRatioCommand.getFormattedResult()+"\n"+
+                //oilTempCommand.getFormattedResult()+"\n"+
+               // airFuelRatioCommand.getFormattedResult()+"\n"+
                 loadCommand.getFormattedResult()+"\n"+
-                consumptionRateCommand.getFormattedResult()+"\n"+
+                //consumptionRateCommand.getFormattedResult()+"\n"+
                 fuelLevelCommand.getFormattedResult()+"\n"+
                 engineCoolantTemperatureCommand.getFormattedResult();
 
-        boolean enviado=db.sendMail(nombreRemitente,direccionRemite,direccionDestino,subject,contenido);
+       // contenido="Esto es una prueba";
+
+
+        enviado=db.sendMail(nombreRemitente,direccionRemite,direccionDestino,subject,contenido);
 
         if(enviado)
             Toast.makeText(this,"Correo enviado",Toast.LENGTH_LONG).show();
-        Toast.makeText(this,"Error al enviar correo",Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this,"Error al enviar correo",Toast.LENGTH_LONG).show();
 
 
 

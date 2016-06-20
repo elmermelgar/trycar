@@ -10,8 +10,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/activation" />
+            <option value="$PROJECT_DIR$/additionnal" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/javamail" />
+            <option value="$PROJECT_DIR$/javax.mail-1.5.5" />
+            <option value="$PROJECT_DIR$/mail" />
             <option value="$PROJECT_DIR$/obd-java-api-master" />
           </set>
         </option>
