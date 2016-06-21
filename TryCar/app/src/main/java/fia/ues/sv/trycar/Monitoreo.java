@@ -108,7 +108,7 @@ EditText edtlevelfuel;
         }
         try {
             //Initialization of OBD
-            new ObdRawCommand("AT D").run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
+//            new ObdRawCommand("AT D").run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
             new ObdRawCommand("AT Z").run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
             new EchoOffCommand().run( bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
             new LineFeedOffCommand().run(  bluetoothSocketWrapper.getInputStream(),   bluetoothSocketWrapper.getOutputStream());
@@ -148,15 +148,15 @@ EditText edtlevelfuel;
                                 try{
                                 obdRawCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
 
-
+                                    System.out.println("PID:" + obdRawCommand.getFormattedResult());
                 speedCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 rpmCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
               //  ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
               //  oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+//                loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                // consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+//               fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
 
                                 //Setting the EditText
                                 //Si el comando retorna un null le pone 0.00
@@ -276,7 +276,7 @@ EditText edtlevelfuel;
                 speedCommand.getFormattedResult()+"\n"+
                 //oilTempCommand.getFormattedResult()+"\n"+
                // airFuelRatioCommand.getFormattedResult()+"\n"+
-                loadCommand.getFormattedResult()+"Carga del motor"+"\n"+
+               // loadCommand.getFormattedResult()+"Carga del motor"+"\n"+
                 //consumptionRateCommand.getFormattedResult()+"\n"+
                 fuelLevelCommand.getFormattedResult()+"Nivel de combustible"+"\n"+
                 engineCoolantTemperatureCommand.getFormattedResult()+"Temperatura del motor";
