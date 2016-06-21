@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -22,6 +21,8 @@ import com.github.pires.obd.commands.SpeedCommand;
 import com.github.pires.obd.commands.engine.LoadCommand;
 import com.github.pires.obd.commands.engine.OilTempCommand;
 import com.github.pires.obd.commands.engine.RPMCommand;
+import com.github.pires.obd.commands.engine.RuntimeCommand;
+import com.github.pires.obd.commands.engine.ThrottlePositionCommand;
 import com.github.pires.obd.commands.fuel.AirFuelRatioCommand;
 import com.github.pires.obd.commands.fuel.ConsumptionRateCommand;
 import com.github.pires.obd.commands.fuel.FuelLevelCommand;
@@ -30,6 +31,7 @@ import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdRawCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.commands.protocol.TimeoutCommand;
+import com.github.pires.obd.commands.temperature.AirIntakeTemperatureCommand;
 import com.github.pires.obd.commands.temperature.AmbientAirTemperatureCommand;
 import com.github.pires.obd.commands.temperature.EngineCoolantTemperatureCommand;
 import com.github.pires.obd.enums.ObdProtocols;
@@ -52,11 +54,11 @@ public class Monitoreo extends Activity {
 
 EditText edtrpm;
 EditText edtspeed;
-EditText edttempamb;
+EditText edttempair;
 EditText edttemprefri;
-EditText edttempoil;
+EditText edtposacel;
 EditText edtengine;
-EditText edtper_fuel;
+EditText edtstar;
 EditText edtlevelfuel;
 
 
@@ -85,6 +87,9 @@ EditText edtlevelfuel;
     LoadCommand loadCommand;   //Carga del motor
     ConsumptionRateCommand consumptionRateCommand; //Tasa de consumo de combustible
     FuelLevelCommand fuelLevelCommand; //Nivel de combustible
+    AirIntakeTemperatureCommand intakeAirTemperaturaCommand;
+    ThrottlePositionCommand throttlePositionCommand;
+    RuntimeCommand runtimeCommand;
 
 
     BDControl db;
@@ -102,11 +107,11 @@ EditText edtlevelfuel;
         }
         edtrpm=(EditText)findViewById(R.id.editrpm);
         edtspeed=(EditText)findViewById(R.id.editspeed);
-        edttempamb=(EditText)findViewById(R.id.edittempamb);
+        edttempair=(EditText)findViewById(R.id.edittempair);
         edttemprefri=(EditText)findViewById(R.id.edittemprefri);
-        edttempoil=(EditText)findViewById(R.id.edittempoil);
+        edtposacel=(EditText)findViewById(R.id.editposacel);
         edtengine=(EditText)findViewById(R.id.editengine);
-        edtper_fuel=(EditText)findViewById(R.id.editpercentfuel);
+        edtstar=(EditText)findViewById(R.id.editstar);
         edtlevelfuel=(EditText)findViewById(R.id.editlevelfuel);
 
         ledGps = (CheckBox) findViewById(R.id.ledGps);
@@ -153,11 +158,14 @@ EditText edtlevelfuel;
         rpmCommand= new RPMCommand();
         speedCommand=new SpeedCommand();
         engineCoolantTemperatureCommand=new EngineCoolantTemperatureCommand();
-        ambientAirTemperatureCommand=new AmbientAirTemperatureCommand();
-        oilTempCommand=new OilTempCommand();
+        //ambientAirTemperatureCommand=new AmbientAirTemperatureCommand();
+        //oilTempCommand=new OilTempCommand();
         loadCommand= new LoadCommand();
-        consumptionRateCommand=new ConsumptionRateCommand();
+        //consumptionRateCommand=new ConsumptionRateCommand();
         fuelLevelCommand=new FuelLevelCommand();
+        intakeAirTemperaturaCommand= new AirIntakeTemperatureCommand();
+        throttlePositionCommand=new ThrottlePositionCommand();
+        runtimeCommand=new RuntimeCommand();
 
         new Thread() {
             public void run() {
@@ -176,27 +184,23 @@ EditText edtlevelfuel;
                 rpmCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
               //  ambientAirTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
               //  oilTempCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-//                loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                // consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-//               fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-
-                                //Setting the EditText
+               fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                                    intakeAirTemperaturaCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
+                throttlePositionCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
+                runtimeCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());                //Setting the EditText
                                 //Si el comando retorna un null le pone 0.00
                                 //Thread.currentThread().sleep(5000);
                                 edtrpm.setText(rpmCommand.getCalculatedResult()!=null?rpmCommand.getCalculatedResult():"0.00");
                                 edtspeed.setText(speedCommand.getCalculatedResult()!=null?speedCommand.getCalculatedResult():"0.00");
-                                //             this.edttempamb.setText(ambientAirTemperatureCommand.getCalculatedResult()!=null?ambientAirTemperatureCommand.getCalculatedResult():"0.00");
-                                //this.edttempoil.setText(oilTempCommand.getCalculatedResult()!=null?oilTempCommand.getCalculatedResult():"0.00");
-                                edtengine.setText(loadCommand.getCalculatedResult()!=null?loadCommand.getCalculatedResult():"0.00");
-                                // this.edtper_fuel.setText(consumptionRateCommand.getCalculatedResult()!=null?consumptionRateCommand.getCalculatedResult():"0.00");
-                                edtlevelfuel.setText(fuelLevelCommand.getCalculatedResult()!=null?fuelLevelCommand.getCalculatedResult():"0.00");
-                                edttemprefri.setText(engineCoolantTemperatureCommand.getCalculatedResult()!=null?engineCoolantTemperatureCommand.getCalculatedResult():"0.00");
-
-                System.out.println("RPM:" + rpmCommand.getFormattedResult());
-                System.out.println("Velocidad:" + speedCommand.getFormattedResult());
-                System.out.println("Algo: " + loadCommand.getFormattedResult());
-
+                                    edttempair.setText(intakeAirTemperaturaCommand.getCalculatedResult()!=null?intakeAirTemperaturaCommand.getCalculatedResult():"0.00");
+                                edtposacel.setText(throttlePositionCommand.getCalculatedResult()!=null?throttlePositionCommand.getCalculatedResult():"0.00");
+                                edtengine.setText(runtimeCommand.getCalculatedResult()!=null?runtimeCommand.getCalculatedResult():"0.00");
+                                edtstar.setText(consumptionRateCommand.getCalculatedResult() != null ? consumptionRateCommand.getCalculatedResult() : "0.00");
+                                edtlevelfuel.setText(fuelLevelCommand.getCalculatedResult() != null ? fuelLevelCommand.getCalculatedResult() : "0.00");
+                                edttemprefri.setText(engineCoolantTemperatureCommand.getCalculatedResult() != null ? engineCoolantTemperatureCommand.getCalculatedResult() : "0.00");
 
                                 System.out.println("PID:" + obdRawCommand.getFormattedResult());
 
@@ -208,7 +212,10 @@ EditText edtlevelfuel;
                                 System.out.println("Engine Coolant:" + engineCoolantTemperatureCommand.getFormattedResult());
                                 //              System.out.println("Consumo combustible(%):" + consumptionRateCommand.getFormattedResult());
 
-                                System.out.println("Nivel de combustible:" + fuelLevelCommand.getFormattedResult());
+                                System.out.println("Temperatura del Aire:" + intakeAirTemperaturaCommand.getFormattedResult());
+                                    System.out.println("Nivel de combustible:" + fuelLevelCommand.getFormattedResult());
+                                    System.out.println("Tiempo de Motor Encendido:" + runtimeCommand.getFormattedResult());
+                                    System.out.println("Posicion del acelerador:" + throttlePositionCommand.getFormattedResult());
                                 //rpm=rpmCommand.getCalculatedResult();
                                 //Thread.currentThread().interrupt();
                             } catch (IOException e) {

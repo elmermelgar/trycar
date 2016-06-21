@@ -14,46 +14,46 @@
         <TextView />
     </TableLayout>
     <TableRow>
-       <LinearLayout
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:weightSum="1"
-           android:baselineAligned="false">
-        <TextView android:text="@string/rpm"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textSize="20dp"/>
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editrpm"
-            android:inputType="text"
-            android:maxLength="10"
-            android:enabled ="false"
-            android:focusable="false"
-            android:width="120dp"
-            android:cursorVisible="false"
-            android:longClickable="false" />
-        <TextView android:text="@string/speed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textSize="20dp"/>
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editspeed"
-            android:inputType="text"
-            android:maxLength="10"
-            android:enabled ="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:cursorVisible="false"
-            android:longClickable="false"
-            android:layout_weight="0.63"
-            android:width="130dp"/>
-       </LinearLayout>
+            android:weightSum="1"
+            android:baselineAligned="false">
+            <TextView android:text="@string/rpm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="20dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editrpm"
+                android:inputType="text"
+                android:maxLength="10"
+                android:enabled ="false"
+                android:focusable="false"
+                android:width="120dp"
+                android:cursorVisible="false"
+                android:longClickable="false" />
+            <TextView android:text="@string/speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="20dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editspeed"
+                android:inputType="text"
+                android:maxLength="10"
+                android:enabled ="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:cursorVisible="false"
+                android:longClickable="false"
+                android:layout_weight="0.63"
+                android:width="130dp"/>
+        </LinearLayout>
 
     </TableRow>
     <TableRow android:orientation="horizontal">
@@ -102,14 +102,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView android:text="@string/tempamb"
+            <TextView android:text="@string/tempair"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/edittempamb"
+                android:id="@+id/edittempair"
                 android:inputType="text"
                 android:maxLength="10"
                 android:enabled ="false"
@@ -118,14 +118,14 @@
                 android:cursorVisible="false"
                 android:longClickable="false"
                 android:width="70dp"/>
-            <TextView android:text="@string/tempoil"
+            <TextView android:text="@string/posacel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/edittempoil"
+                android:id="@+id/editposacel"
                 android:inputType="text"
                 android:maxLength="10"
                 android:enabled ="false"
@@ -135,82 +135,90 @@
                 android:longClickable="false"
                 android:width="110dp"/>
         </LinearLayout>
-        </TableRow>
-        <TableRow android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-                <TextView android:text="@string/percentfuel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"/>
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editpercentfuel"
-                    android:inputType="text"
-                    android:maxLength="10"
-                    android:enabled ="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:cursorVisible="false"
-                    android:longClickable="false"
-                    android:width="100dp"/>
-                <TextView android:text="@string/levelfuel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"/>
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editlevelfuel"
-                    android:inputType="text"
-                    android:maxLength="10"
-                    android:enabled ="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:cursorVisible="false"
-                    android:longClickable="false"
-                    android:width="90dp"/>
-            </LinearLayout>
-       </TableRow>
-        <TableRow>
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-            <Button
+    </TableRow>
+    <TableRow android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView android:text="@string/star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="guardar"
-                android:text="@string/guardar"/>
-            </LinearLayout>
-
-            <Button
+                android:textSize="20dp"/>
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mostrarReporte"
-                android:text="@string/reporte"
-                android:layout_column="1" />
-        </TableRow>
-        <TableRow>
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="enviarEmail"
-                    android:text="@string/envmail"/>
-            </LinearLayout>
-
-            <Button
+                android:id="@+id/editstar"
+                android:inputType="text"
+                android:maxLength="10"
+                android:enabled ="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:cursorVisible="false"
+                android:longClickable="false"
+                android:width="90dp"/>
+            <TextView android:text="@string/levelfuel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mostrarRuta"
-                android:text="@string/ruta"
-                android:layout_column="1" />
-        </TableRow>
+                android:textSize="20dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editlevelfuel"
+                android:inputType="text"
+                android:maxLength="10"
+                android:enabled ="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:cursorVisible="false"
+                android:longClickable="false"
+                android:width="90dp"/>
+        </LinearLayout>
+    </TableRow>
+  <LinearLayout>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+  </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="guardar"
+            android:text="@string/guardar"
+            android:width="120dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="mostrarReporte"
+            android:text="@string/reporte"
+            android:layout_column="2"
+            android:layout_marginLeft="80dp"
+            android:width="120dp"/>
+    </LinearLayout>
+    <LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="enviarEmail"
+            android:text="@string/envmail"
+            android:width="120dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="mostrarRuta"
+            android:text="@string/ruta"
+            android:layout_column="1"
+            android:layout_marginLeft="80dp"
+            android:width="120dp"/>
+    </LinearLayout>
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent">

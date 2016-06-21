@@ -7,10 +7,10 @@
     <string name="promedio">Promedio :</string>
     <string name="rpm">RPM: </string>
     <string name="temprefri">Temp Ref:</string>
-    <string name="tempamb">Temp  Amb:</string>
-    <string name="percentfuel">% fuel:</string>
+    <string name="tempair">Temp  Air:</string>
+    <string name="star">Time St:</string>
     <string name="levelfuel">Level Fuel:</string>
-    <string name="tempoil">TempOil:</string>
+    <string name="posacel">Pos Ac:</string>
     <string name="engine">Engine:</string>
     <string name="speed">Speed: </string>
     <string name="reporte">Reporte</string>

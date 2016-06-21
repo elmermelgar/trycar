@@ -1,2 +1,2 @@
-include ':app', ':obd-java-api-master', ':javamail', ':javax.mail-1.5.5', ':activation', ':additionnal', ':mail'
+include ':javax.mail-1.5.5', ':activation', ':additionnal', ':mail', ':app', ':javamail', ':obd-java-api-master'
 //project(':obd-java-api-master').projectDir = new File('../TryCar')

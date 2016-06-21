@@ -1,14 +1,14 @@
 package fia.ues.sv.trycar;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import fia.ues.sv.trycar.model.BDControl;
 
-public class DatosUsuarioActivity extends AppCompatActivity {
+public class DatosUsuarioActivity extends Activity {
     EditText editNombre;
     EditText editEmail;
     BDControl db= new BDControl(this);

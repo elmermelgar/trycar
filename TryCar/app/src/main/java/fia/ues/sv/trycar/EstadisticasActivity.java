@@ -1,5 +1,6 @@
 package fia.ues.sv.trycar;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import fia.ues.sv.trycar.model.BDControl;
 
-public class EstadisticasActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class EstadisticasActivity extends Activity implements AdapterView.OnItemSelectedListener{
     String indicador;
     private final String[] indicadores=new String[]{"RPM","SPEED","OIL_TEMP","AMBI_TEMP","REFRI_TEMP","LOAD_ENGINE","LEVEL_FUEL","RATE_FUEL"};
     Spinner indicadorSpinner;
