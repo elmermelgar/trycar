@@ -120,7 +120,7 @@ EditText edtlevelfuel;
                 this.getSystemService(Context.LOCATION_SERVICE);
         db=new BDControl(this);
 
-
+/*
 
         //Getting the default bluetooth adapter
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -148,7 +148,7 @@ EditText edtlevelfuel;
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -187,15 +187,15 @@ EditText edtlevelfuel;
                 loadCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                // consumptionRateCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
                 engineCoolantTemperatureCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-               fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
-                                    intakeAirTemperaturaCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
+                fuelLevelCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());
+                intakeAirTemperaturaCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
                 throttlePositionCommand.run(bluetoothSocketWrapper.getInputStream(),bluetoothSocketWrapper.getOutputStream());
                 runtimeCommand.run(bluetoothSocketWrapper.getInputStream(), bluetoothSocketWrapper.getOutputStream());                //Setting the EditText
                                 //Si el comando retorna un null le pone 0.00
                                 //Thread.currentThread().sleep(5000);
                                 edtrpm.setText(rpmCommand.getCalculatedResult()!=null?rpmCommand.getCalculatedResult():"0.00");
                                 edtspeed.setText(speedCommand.getCalculatedResult()!=null?speedCommand.getCalculatedResult():"0.00");
-                                    edttempair.setText(intakeAirTemperaturaCommand.getCalculatedResult()!=null?intakeAirTemperaturaCommand.getCalculatedResult():"0.00");
+                                edttempair.setText(intakeAirTemperaturaCommand.getCalculatedResult()!=null?intakeAirTemperaturaCommand.getCalculatedResult():"0.00");
                                 edtposacel.setText(throttlePositionCommand.getCalculatedResult()!=null?throttlePositionCommand.getCalculatedResult():"0.00");
                                 edtengine.setText(runtimeCommand.getCalculatedResult()!=null?runtimeCommand.getCalculatedResult():"0.00");
                                 edtstar.setText(consumptionRateCommand.getCalculatedResult() != null ? consumptionRateCommand.getCalculatedResult() : "0.00");
@@ -206,16 +206,16 @@ EditText edtlevelfuel;
 
                                 System.out.println("Velocidad:" + speedCommand.getFormattedResult());
                                 System.out.println("RPM:" + rpmCommand.getFormattedResult());
-                                //           System.out.println("Temp Amb:" + ambientAirTemperatureCommand.getFormattedResult());
-                                //              System.out.println("Temp Oil:" + oilTempCommand.getFormattedResult());
+                                //System.out.println("Temp Amb:" + ambientAirTemperatureCommand.getFormattedResult());
+                                //System.out.println("Temp Oil:" + oilTempCommand.getFormattedResult());
                                 System.out.println("Carga del motor: " + loadCommand.getFormattedResult());
                                 System.out.println("Engine Coolant:" + engineCoolantTemperatureCommand.getFormattedResult());
-                                //              System.out.println("Consumo combustible(%):" + consumptionRateCommand.getFormattedResult());
+                                //System.out.println("Consumo combustible(%):" + consumptionRateCommand.getFormattedResult());
 
                                 System.out.println("Temperatura del Aire:" + intakeAirTemperaturaCommand.getFormattedResult());
-                                    System.out.println("Nivel de combustible:" + fuelLevelCommand.getFormattedResult());
-                                    System.out.println("Tiempo de Motor Encendido:" + runtimeCommand.getFormattedResult());
-                                    System.out.println("Posicion del acelerador:" + throttlePositionCommand.getFormattedResult());
+                                System.out.println("Nivel de combustible:" + fuelLevelCommand.getFormattedResult());
+                                System.out.println("Tiempo de Motor Encendido:" + runtimeCommand.getFormattedResult());
+                                System.out.println("Posicion del acelerador:" + throttlePositionCommand.getFormattedResult());
                                 //rpm=rpmCommand.getCalculatedResult();
                                 //Thread.currentThread().interrupt();
                             } catch (IOException e) {
@@ -245,12 +245,13 @@ EditText edtlevelfuel;
 
         Double rpm=Double.parseDouble(edtrpm.getText().toString());
         Double speed=Double.parseDouble(edtspeed.getText().toString());
-        //Double oilTem=Double.parseDouble(edtrpm.getText().toString());
-        //Double ambTem=Double.parseDouble(edtrpm.getText().toString());
         Double refriTem=Double.parseDouble(edttemprefri.getText().toString());
         Double engine=Double.parseDouble(edtengine.getText().toString());
         Double levelFuel=Double.parseDouble(edtlevelfuel.getText().toString());
-        //Double rateFuel=Double.parseDouble(edtrpm.getText().toString());
+
+        Double posAcel=Double.parseDouble(edtposacel.getText().toString());
+        Double airTem=Double.parseDouble(edttempair.getText().toString());
+        Double star=Double.parseDouble(edtstar.getText().toString());
 
 
         SimpleDateFormat sdfAmerica = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a");
@@ -262,12 +263,12 @@ EditText edtlevelfuel;
 
         monitoreo.setRpm(rpm);
         monitoreo.setSpeed(speed);
-       // monitoreo.setTempOil(oilTem);
-        //monitoreo.setTempAmb(ambTem);
+        monitoreo.setPosAcel(posAcel);
+        monitoreo.setTempAir(airTem);
         monitoreo.setTempRefri(refriTem);
         monitoreo.setEngine(engine);
         monitoreo.setLevelFuel(levelFuel);
-        //monitoreo.setPerFuel(rateFuel);
+        monitoreo.setStar(star);
         monitoreo.setFecha(sDateInAmerica);
         monitoreo.setLatitud(latitud);
         monitoreo.setLongitud(longitud);
@@ -304,10 +305,10 @@ EditText edtlevelfuel;
         nombreRemitente="TryCar";
 
        contenido=rpmCommand.getFormattedResult()+"\n"+
-                speedCommand.getFormattedResult()+"\n"+
-                //oilTempCommand.getFormattedResult()+"\n"+
-               // airFuelRatioCommand.getFormattedResult()+"\n"+
-               // loadCommand.getFormattedResult()+"Carga del motor"+"\n"+
+                "Velocidad: "+speedCommand.getFormattedResult()+"\n"+
+                "Temperatura del Aire:"+intakeAirTemperaturaCommand.getFormattedResult()+"\n"+
+                "Posicion del acelerador:"+throttlePositionCommand.getFormattedResult()+"\n"+
+               "Tiempo de carga de Motor: "+runtimeCommand.getFormattedResult()+"Carga del motor"+"\n"+
                 //consumptionRateCommand.getFormattedResult()+"\n"+
                 fuelLevelCommand.getFormattedResult()+"Nivel de combustible"+"\n"+
                 engineCoolantTemperatureCommand.getFormattedResult()+"Temperatura del motor";

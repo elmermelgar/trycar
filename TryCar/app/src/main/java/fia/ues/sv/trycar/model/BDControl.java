@@ -111,12 +111,12 @@ public class BDControl {
         ContentValues moni = new ContentValues();
         moni.put("RPM", monitoreo.getRpm());
         moni.put("SPEED", monitoreo.getSpeed());
-        //moni.put("OIL_TEMP", monitoreo.getTempOil());
-       // moni.put("AMBI_TEMP", monitoreo.getTempAmb());
+        moni.put("OIL_TEMP", monitoreo.getPosAcel());
+        moni.put("AMBI_TEMP", monitoreo.getTempAir());
         moni.put("REFRI_TEMP", monitoreo.getTempRefri());
         moni.put("LOAD_ENGINE", monitoreo.getEngine());
         moni.put("LEVEL_FUEL", monitoreo.getLevelFuel());
-        //moni.put("RATE_FUEL", monitoreo.getPerFuel());
+        moni.put("RATE_FUEL", monitoreo.getStar());
         moni.put("FECHA", monitoreo.getFecha().toString());
         moni.put("LATITUD" , monitoreo.getLatitud());
         moni.put("LONGITUD" , monitoreo.getLongitud());
@@ -282,7 +282,7 @@ public class BDControl {
                             "\nTemp. Refrigetante "+ REFRI_TEMP1+
                             "\nNivel Combustible "+ LEVEL_FUEL1 +
                             "\nTasa Combustible "+ RATE_FUEL1+ "%"+
-                            "\nCArga de Combustible "+ LOAD_ENGINE1+
+                            "\nCarga de Combustible "+ LOAD_ENGINE1+
                             "\nRPM1 "+ RPM1
             );
 
