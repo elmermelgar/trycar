@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 
 
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,7 @@ public class BDControl {
     private final Context context;
     private DataBaseHelper DBHelper;
     private SQLiteDatabase db;
+    private ArrayList<ArrayList> longLat;
 
     public BDControl(Context ctx) {
         this.context = ctx;
@@ -116,9 +118,9 @@ public class BDControl {
         moni.put("LEVEL_FUEL", monitoreo.getLevelFuel());
         //moni.put("RATE_FUEL", monitoreo.getPerFuel());
         moni.put("FECHA", monitoreo.getFecha().toString());
-        /*moni.put("LATITUD" , monitoreo.getLatitud());
+        moni.put("LATITUD" , monitoreo.getLatitud());
         moni.put("LONGITUD" , monitoreo.getLongitud());
-        moni.put("ALTITUD" , monitoreo.getAltitud());*/
+        moni.put("ALTITUD" , monitoreo.getAltitud());
         contador = db.insert("MONITOREO", null, moni);
         if (contador == -1 || contador == 0) {
             return false;
@@ -238,4 +240,58 @@ public class BDControl {
         }
     }
 
+    public ArrayList<ArrayList> getLongLat() {
+        ArrayList<ArrayList> allData = new ArrayList<ArrayList>();
+        Cursor cursor = db.rawQuery("select * from Monitoreo where latitud  NOT NULL and longitud NOT NULL and latitud != '0' and longitud != ''  order by ID_monitoreo  DESC", new String[]{});
+        // Obtenemos los índices de las columnas
+        int LATITUD = cursor.getColumnIndex("LATITUD");
+        int LONGITUD = cursor.getColumnIndex("LONGITUD");
+        int FECHA = cursor.getColumnIndex("FECHA");
+        int ID_MONITOREO = cursor.getColumnIndex("ID_MONITOREO");
+        int RPM = cursor.getColumnIndex("RPM");
+        int OIL_TEMP = cursor.getColumnIndex("OIL_TEMP");
+        int AMBI_TEMP = cursor.getColumnIndex("AMBI_TEMP");
+        int REFRI_TEMP = cursor.getColumnIndex("REFRI_TEMP");
+        int LEVEL_FUEL = cursor.getColumnIndex("LEVEL_FUEL");
+        int RATE_FUEL = cursor.getColumnIndex("RATE_FUEL");
+        int LOAD_ENGINE = cursor.getColumnIndex("LOAD_ENGINE");
+
+//Recorremos el cursor
+        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+            ArrayList<String> fila = new ArrayList<String>();
+
+            String lat = cursor.getString(LATITUD);
+            String lon = cursor.getString(LONGITUD);
+            String FECHA1 = cursor.getString(FECHA);
+            String ID_MONITOREO1 = cursor.getString(ID_MONITOREO);
+            String OIL_TEMP1 = cursor.getString(OIL_TEMP);
+            String AMBI_TEMP1 = cursor.getString(AMBI_TEMP);
+            String REFRI_TEMP1 = cursor.getString(REFRI_TEMP);
+            String LEVEL_FUEL1 = cursor.getString(LEVEL_FUEL);
+            String RATE_FUEL1 = cursor.getString(RATE_FUEL);
+            String LOAD_ENGINE1 = cursor.getString(LOAD_ENGINE);
+            String RPM1 = cursor.getString(RPM);
+
+            fila.add(lat);
+            fila.add(lon);
+            fila.add("# "+ ID_MONITOREO1);
+            fila.add(
+                    "Fecha "+ FECHA1+
+                            "\nTemp. Aceite "+ OIL_TEMP1+
+                            "\nTemp. Ambiente "+ AMBI_TEMP1+
+                            "\nTemp. Refrigetante "+ REFRI_TEMP1+
+                            "\nNivel Combustible "+ LEVEL_FUEL1 +
+                            "\nTasa Combustible "+ RATE_FUEL1+ "%"+
+                            "\nCArga de Combustible "+ LOAD_ENGINE1+
+                            "\nRPM1 "+ RPM1
+            );
+
+            allData.add(fila);
+
+        }
+
+        cursor.close();
+
+        return allData;
+    }
 }

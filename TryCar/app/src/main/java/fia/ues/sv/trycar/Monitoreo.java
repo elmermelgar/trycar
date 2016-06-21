@@ -1,14 +1,23 @@
 package fia.ues.sv.trycar;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
-
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import com.github.pires.obd.commands.SpeedCommand;
 import com.github.pires.obd.commands.engine.LoadCommand;
 import com.github.pires.obd.commands.engine.OilTempCommand;
@@ -39,7 +48,7 @@ import fia.ues.sv.trycar.model.BDControl;
 import fia.ues.sv.trycar.util.BluetoothConnector;
 import fia.ues.sv.trycar.util.BluetoothSocketWrapper;
 
-public class Monitoreo extends AppCompatActivity {
+public class Monitoreo extends Activity {
 
 EditText edtrpm;
 EditText edtspeed;
@@ -49,6 +58,14 @@ EditText edttempoil;
 EditText edtengine;
 EditText edtper_fuel;
 EditText edtlevelfuel;
+
+
+     CheckBox ledGps;
+     ArrayAdapter<CharSequence> adapter;
+    LocationManager locationManager;
+     String latitud="0";
+     String longitud="0";
+
 
     //Initial configuration ODB Adapter
     EchoOffCommand echoOffCommand;
@@ -74,6 +91,7 @@ EditText edtlevelfuel;
 
     AirFuelRatioCommand airFuelRatioCommand;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +108,11 @@ EditText edtlevelfuel;
         edtengine=(EditText)findViewById(R.id.editengine);
         edtper_fuel=(EditText)findViewById(R.id.editpercentfuel);
         edtlevelfuel=(EditText)findViewById(R.id.editlevelfuel);
+
+        ledGps = (CheckBox) findViewById(R.id.ledGps);
+
+        locationManager = (LocationManager)
+                this.getSystemService(Context.LOCATION_SERVICE);
         db=new BDControl(this);
 
 
@@ -239,7 +262,8 @@ EditText edtlevelfuel;
         monitoreo.setLevelFuel(levelFuel);
         //monitoreo.setPerFuel(rateFuel);
         monitoreo.setFecha(sDateInAmerica);
-
+        monitoreo.setLatitud(latitud);
+        monitoreo.setLongitud(longitud);
         db.abrir();
         boolean insertado=db.insertar(monitoreo);
         db.cerrar();
@@ -295,4 +319,67 @@ EditText edtlevelfuel;
 
     }
 
+    public void mostrarRuta(View view) {
+        Class<?> clase = null;
+        try {
+            clase = Class.forName("fia.ues.sv.trycar.MAPS");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Intent inte = new Intent();
+        inte.setClass(view.getContext(), clase);
+        startActivity(inte);
+
+    }
+
+
+    LocationListener locationListener = new LocationListener() {
+
+
+        public void onLocationChanged(Location location) {
+// TODO Auto-generated method stub
+            latitud = String.valueOf(location.getLatitude());
+            longitud = String.valueOf(location.getLongitude());
+
+
+            ledGps.setChecked(true);
+
+
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            ledGps.setChecked(true);
+
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            latitud ="0";
+            longitud="0";
+
+
+
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(locationListener);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+    }
 }
